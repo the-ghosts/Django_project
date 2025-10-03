@@ -20,18 +20,27 @@
                                 <hr>
                                 <h4>{{ post.title }}</h4>
                                 <p>{{post.content }}</p>
+                                <div>
+                                    <a href="{% url 'react_to_post' post.id 'like' %}">👍 Like {{ post.total_likes }}</a>
+                                    <a href="{% url 'react_to_post' post.id 'dislike' %}">👎 Dislike {{ post.total_dislikes }}</a>
+                                </div>
                             </div>
                         </div>
                         <p class= "mt-4">
-                            <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">{{post.comment_count}}
+                            <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">{{post.comment_count}} Comments
                             </a>
                         </p>
                         <div class="collapse" id="collapseExample">
                             <div style= "height: 250px; overflow-y: scroll; " class="card card-body">
-                                {% for comment in post.comment_set.all %}
-                                <p class="text-justify">
-                                    {{comment.comments}}
-                                </p>
+                                {% for comment in comments %}
+                                    <div class="comment-container">
+                                        
+                                        <strong>{{ comment.user.username }}</strong>
+                                        <small>{{ comment.date_created }}</small>
+                                        <p>{{ comment.comments }}</p>
+                                    </div>
+                                    {% empty %}
+                                    <p>No comments yet. Be the first to comment!</p>
                                 {% endfor %}
                             </div>
                         </div>
@@ -46,5 +55,3 @@
         </div>
     </div>
 {% endblock %}
-
-
